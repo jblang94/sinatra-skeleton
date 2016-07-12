@@ -60,6 +60,11 @@ post '/songs' do
   end
 end
 
+# Updates a song's upvote count
+get '/upvote' do
+
+end
+
 #############################
      ####  USER #####
 #############################

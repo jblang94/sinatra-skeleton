@@ -1,6 +1,7 @@
 <h1>Song Wall</h1>
 
 <% @songs.each do |song| %>
+
   <div class="song">
     <a href="/songs/<%= song.id %>">
       <h3>
@@ -8,15 +9,21 @@
       </h3>
     </a>
     <a href="<%= song.url %>">Listen</a>
+    <% if current_user %>
+      <a href="/upvote">Upvote</a>
+    <% end %>
+    <p>Upvote Count: <%= song.upvote_count %></p>
     <% if song.user %>
       <p>Posted by: <%= song.user.email %></p>
     <% end %>
-    <p>Upvote Count: <%= song.upvote_count %></p>
   </div>
+
 <% end %>
 
 <% if current_user %>
   <a href="/songs/new">Post a song to the Song Wall!</a>
 <% end %>
+
 <br>
+
 <a href="/">Home</a>
