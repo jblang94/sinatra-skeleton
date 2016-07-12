@@ -1,4 +1,13 @@
 <h1>Home Page</h1>
+<% if current_user %>
+  <p><%= current_user.email %></p>
+<% end %>
+
 <a href="/songs">View the Song Wall</a>
-<a href="/users/new">Create an Account</a>
-<a href="/sessions/new">Login</a>
+
+<%if current_user %>
+  <a href="/sessions/logout">Logout</a>
+<% else %>
+  <a href="/users/new">Create an Account</a>
+  <a href="/sessions/new">Login</a>
+<% end %>

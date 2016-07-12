@@ -1,6 +1,12 @@
 # Enables cookies in Sinatra
 enable :sessions
 
+helpers do
+  def current_user
+    @current_user ||= User.find_by(email: session[:user]) if session[:user]
+  end
+end
+
 #############################
   ####  HOME PAGE #####
 #############################
@@ -87,10 +93,15 @@ end
 post '/sessions' do
   @user = User.find_by(email: params[:email])
   if @user && params[:password] == @user.password
-    session[:user] = @user
+    session[:user] = @user.email
     redirect '/'
   else
     @error = "Invalid Login"
     erb :'sessions/new'
   end
+end
+
+get '/sessions/logout' do
+  session[:user] = nil
+  redirect '/'
 end
