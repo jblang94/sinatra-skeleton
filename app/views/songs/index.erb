@@ -8,6 +8,9 @@
       </h3>
     </a>
     <a href="<%= song.url %>">Listen</a>
+    <% if song.user %>
+      <p>Posted by: <%= song.user.email %></p>
+    <% end %>
   </div>
 <% end %>
 

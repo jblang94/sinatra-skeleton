@@ -2,9 +2,12 @@
 enable :sessions
 
 helpers do
+
+  # returns the instance of the current user if the session has a logged in user
   def current_user
     @current_user ||= User.find_by(email: session[:user]) if session[:user]
   end
+
 end
 
 #############################
@@ -21,8 +24,9 @@ end
 #############################
 
 # Bring users to a list of all songs
+# Currently ordered by most recent post
 get '/songs' do
-  @songs = Song.all
+  @songs = Song.order(created_at: :desc)
   erb :'songs/index'
 end
 
@@ -46,6 +50,8 @@ post '/songs' do
     author: params[:author],
     url: params[:url]
   )
+
+  @song.user = current_user
 
   if @song.save
       redirect '/songs'
@@ -101,6 +107,7 @@ post '/sessions' do
   end
 end
 
+# Logs a user out
 get '/sessions/logout' do
   session[:user] = nil
   redirect '/'
