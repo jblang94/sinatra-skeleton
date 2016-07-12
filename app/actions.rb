@@ -5,7 +5,7 @@ helpers do
 
   # returns the instance of the current user if the session has a logged in user
   def current_user
-    @current_user ||= User.find_by(email: session[:user]) if session[:user]
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
 end
@@ -26,7 +26,8 @@ end
 # Bring users to a list of all songs
 # Orders songs by their upvote counts in DESCENDING order
 get '/songs' do
-  @songs = Song.order_by_upvote_count
+  #@songs = Song.order_by_upvote_count
+  @songs = Song.order(created_at: :desc)
   erb :'songs/index'
 end
 
@@ -60,12 +61,17 @@ post '/songs' do
   end
 end
 
-# Updates a song's upvote count
-# post '/upvote' do
-#   # @upvote = Upvote.new
-#   # @upvote.user = current_user
-#   # @upvote.song = .....  
-# end
+# Technically should be a post, but we are not using jQuery yet
+get '/upvote/:song_id' do
+  @upvote = Upvote.new(user: current_user, song: Song.find(params[:song_id]))
+
+  if @upvote.save
+    session[:flash] = "You upvoted!"
+  end
+
+  redirect '/songs'
+
+end
 
 #############################
      ####  USER #####
@@ -107,7 +113,7 @@ post '/sessions' do
   @user = User.find_by(email: params[:email])
   if @user && @user.password == params[:password]
     session[:flash] = "Welcome #{@user.email}!"
-    session[:user] = @user.email
+    session[:user_id] = @user.id
     redirect '/'
   else
     session[:flash] = "Invalid login!"
@@ -117,6 +123,6 @@ end
 
 # Logs a user out
 get '/sessions/logout' do
-  session[:user] = nil
+  session.delete(:user_id)
   redirect '/'
 end

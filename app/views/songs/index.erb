@@ -1,5 +1,14 @@
 <h1>Song Wall</h1>
 
+<a href="/">Home</a>
+
+<br>
+
+<% if current_user %>
+  <p>Currently logged in as: <%= current_user.email %></p>
+  <a href="/songs/new">Post a song to the Song Wall!</a>
+<% end %>
+
 <% @songs.each do |song| %>
 
   <div class="song">
@@ -9,21 +18,19 @@
       </h3>
     </a>
     <a href="<%= song.url %>">Listen</a>
-    <% if current_user %>
-      <a href="/upvote">Upvote</a>
+
+    <% if current_user && !Upvote.exists?(user_id: current_user.id, song_id: song.id) %>
+      <a href="/upvote/<%= song.id %>"><input type="button" value="Upvote"></a>
     <% end %>
+
     <p>Upvote Count: <%= song.upvote_count %></p>
-    <% if song.user %>
-      <p>Posted by: <%= song.user.email %></p>
+
+    <% if song.user_id %>
+      <p>Posted by: <%= User.find(song.user_id).email %></p>
+    <% else %>
+      <p>No user posted this song...</p>
     <% end %>
+
   </div>
 
 <% end %>
-
-<% if current_user %>
-  <a href="/songs/new">Post a song to the Song Wall!</a>
-<% end %>
-
-<br>
-
-<a href="/">Home</a>
