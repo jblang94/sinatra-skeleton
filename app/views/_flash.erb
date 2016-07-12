@@ -1,0 +1,6 @@
+<% if session[:flash] %>
+  <div>
+    <p><%= session[:flash] %></p>
+  </div>
+  <% session.delete(:flash) %>
+<% end %>

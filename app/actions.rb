@@ -61,9 +61,11 @@ post '/songs' do
 end
 
 # Updates a song's upvote count
-get '/upvote' do
-
-end
+# post '/upvote' do
+#   # @upvote = Upvote.new
+#   # @upvote.user = current_user
+#   # @upvote.song = .....  
+# end
 
 #############################
      ####  USER #####
@@ -103,11 +105,12 @@ end
 # Otherwise, show the login form with an invalid login error
 post '/sessions' do
   @user = User.find_by(email: params[:email])
-  if @user && params[:password] == @user.password
+  if @user && @user.password == params[:password]
+    session[:flash] = "Welcome #{@user.email}!"
     session[:user] = @user.email
     redirect '/'
   else
-    @error = "Invalid Login"
+    session[:flash] = "Invalid login!"
     erb :'sessions/new'
   end
 end
