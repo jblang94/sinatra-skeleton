@@ -11,6 +11,7 @@
     <% if song.user %>
       <p>Posted by: <%= song.user.email %></p>
     <% end %>
+    <p>Upvote Count: <%= song.upvotes.count %></p>
   </div>
 <% end %>
 
