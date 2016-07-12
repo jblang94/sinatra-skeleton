@@ -1,9 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Songs</title>
-</head>
-<body>
-<h1>Songs</h1>
-</body>
-</html>
+<h1>Song Wall</h1>
+
+<% @songs.each do |song| %>
+  <div class="song">
+    <a href="/songs/<%= song.id %>">
+      <h3>
+        <%= song.title %> <small>(by: <%= song.author %>)</small>
+      </h3>
+    </a>
+    <a href="<%= song.url %>">Listen</a>
+  </div>
+<% end %>
+
+<a href="/songs/new">Post a song to the Song Wall!</a>
+<br>
+<a href="/">Home</a>
