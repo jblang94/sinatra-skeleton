@@ -1,11 +1,18 @@
+# Enables cookies in Sinatra
 enable :sessions
+
+#############################
+  ####  HOME PAGE #####
+#############################
 
 # Homepage (Root path)
 get '/' do
   erb :index
 end
 
-###### SONG WALL #########
+#############################
+  ####  SONG WALL #####
+#############################
 
 # Bring users to a list of all songs
 get '/songs' do
@@ -41,7 +48,9 @@ post '/songs' do
   end
 end
 
-####### USERS ###############
+#############################
+     ####  USER #####
+#############################
 
 # Presents the create account page
 get '/users/new' do
@@ -64,4 +73,24 @@ post '/users' do
   end
 end
 
-##### SESSION ############
+#############################
+     ####  SESSION #####
+#############################
+
+# Present the login form
+get '/sessions/new' do
+  erb :'sessions/new'
+end
+
+# Redirect the user to the home page if successful
+# Otherwise, show the login form with an invalid login error
+post '/sessions' do
+  @user = User.find_by(email: params[:email])
+  if @user && params[:password] == @user.password
+    session[:user] = @user
+    redirect '/'
+  else
+    @error = "Invalid Login"
+    erb :'sessions/new'
+  end
+end
