@@ -11,6 +11,8 @@
   </div>
 <% end %>
 
-<a href="/songs/new">Post a song to the Song Wall!</a>
+<% if current_user %>
+  <a href="/songs/new">Post a song to the Song Wall!</a>
+<% end %>
 <br>
 <a href="/">Home</a>
