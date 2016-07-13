@@ -1,13 +1,16 @@
-<h1>Home Page</h1>
-<% if current_user %>
-  <p><%= current_user.email %></p>
-<% end %>
+<div class="jumbotron center-container">
+  <h1>Welcome to Song Wall</h1>
 
-<a href="/songs">View the Song Wall</a>
+  <% if current_user %>
+    <p><%= current_user.email %></p>
+  <% end %>
 
-<%if current_user %>
-  <a href="/sessions/logout">Logout</a>
-<% else %>
-  <a href="/users/new">Create an Account</a>
-  <a href="/sessions/new">Login</a>
-<% end %>
+  <p><a class="btn btn-primary btn-lg" href="/songs" role="button">Go to the Song Wall</a></p>
+
+  <%if current_user %>
+    <p><a class="btn btn-primary btn-lg" href="/sessions/logout" role="button">Logout</a></p>
+  <% else %>
+    <p><a class="btn btn-primary btn-lg" href="/users/new" role="button">Create an Account</a></p>
+    <p><a class="btn btn-primary btn-lg" href="/sessions/new" role="button">Login</a></p>
+  <% end %>
+</div>

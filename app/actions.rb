@@ -26,8 +26,7 @@ end
 # Bring users to a list of all songs
 # Orders songs by their upvote counts in DESCENDING order
 get '/songs' do
-  #@songs = Song.order_by_upvote_count
-  @songs = Song.order(created_at: :desc)
+  @songs = Song.order_by_upvote_count
   erb :'songs/index'
 end
 

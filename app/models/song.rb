@@ -7,7 +7,7 @@ class Song < ActiveRecord::Base
   validates :author, presence: true
 
   def self.order_by_upvote_count
-    Song.select("*, COUNT(upvotes.song_id)").joins("LEFT JOIN upvotes ON songs.id = upvotes.song_id").group("songs.id").order("COUNT(upvotes.song_id) DESC")
+    Song.includes(:upvotes).group("song_id").order("COUNT(upvotes.id) DESC").references(:upvotes)
   end
 
   def upvote_count

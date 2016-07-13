@@ -11,16 +11,16 @@
 
 <% @songs.each do |song| %>
 
-  <div class="song">
-    <a href="/songs/<%= song.id %>">
+  <div class="container center-container">
+    <a class="no-underline" href="/songs/<%= song.id %>">
       <h3>
         <%= song.title %> <small>(by: <%= song.author %>)</small>
       </h3>
     </a>
-    <a href="<%= song.url %>">Listen</a>
+    <a class="no-underline" href="<%= song.url %>">Listen</a>
 
     <% if current_user && !Upvote.exists?(user_id: current_user.id, song_id: song.id) %>
-      <a href="/upvote/<%= song.id %>"><input type="button" value="Upvote"></a>
+      <a class="no-underline" href="/upvote/<%= song.id %>"><input type="button" value="Upvote"></a>
     <% end %>
 
     <p>Upvote Count: <%= song.upvote_count %></p>
