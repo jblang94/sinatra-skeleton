@@ -93,6 +93,7 @@ post '/users' do
   if @user.save
     redirect '/'
   else
+    session[:flash] = "Error when creating account!"
     erb :'users/new'
   end
 end
