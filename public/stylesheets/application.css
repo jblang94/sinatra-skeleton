@@ -5,3 +5,7 @@ a.no-underline:hover{
 .center-container {
   text-align: center;
 }
+
+.brand-font {
+  font-size: 3em;
+}
